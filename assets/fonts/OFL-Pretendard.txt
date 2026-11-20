@@ -1,0 +1,8 @@
+Pretendard (Regular, Medium, SemiBold, Bold, ExtraBold, Black)
+Copyright (c) 2021-2023 Kil Hyung-jin (길형진)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+License and FAQ: scripts.sil.org/OFL
+
+The files in this folder are subsets of the original Pretendard OTF files
+(Latin + KS X 1001 Hangul 2,350 + characters used on this site), converted to WOFF.
