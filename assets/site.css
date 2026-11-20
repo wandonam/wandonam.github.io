@@ -565,6 +565,12 @@ a.c-card:hover{border-color:var(--brand);box-shadow:var(--glow)}
 .logo-mark{width:46px;height:28px}
 .logo-mark .mark{width:46px;height:28px}
 .logo .logo-word{font-size:19px;font-weight:900;letter-spacing:.24em;line-height:1;margin-right:-.24em;background:linear-gradient(180deg,#FFFFFF 30%,#B9C2FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kicker,.stepper .en,.phase-head .k{font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.16em;line-height:1.2;color:var(--brand);text-transform:uppercase}
+.kicker{margin-bottom:10px}
+.stepper .en{display:block;margin-bottom:3px}
+.phase-head{align-items:center}
+.phase-head .k{border:1px solid var(--line-2);border-radius:999px;padding:4px 10px 4px 11px;white-space:nowrap}
+.site-nav a,.site-foot .fl a{letter-spacing:.12em;font-size:13px}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .cta.pri:hover{background:var(--btn-hi);border-color:var(--btn-hi)}
 .cta.pri:active{background:var(--btn-press);border-color:var(--btn-press);transform:translateY(1px)}
