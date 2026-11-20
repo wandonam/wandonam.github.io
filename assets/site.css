@@ -205,7 +205,9 @@ h1,h2,h3,h4{margin:0;line-height:1.25;letter-spacing:-.02em}
 :root{
   
   --bg:#0C0C0D; --surface:#151517; --surface-2:#1C1C1F; --ink:#F3F0EA; --ink-2:#D2CEC6; --muted:#9E9A93; --line:#2A2A2E; --line-2:#3A3A40;
-  --brand:#8C9BFF; --brand-soft:#1E2138; --brand-ink:#070A12;
+  --brand:#B4BDFF; --brand-hi:#C9D0FF; --brand-soft:#1E2138; --brand-ink:#0C0C0D; --brand-glow:rgba(180,189,255,.3);
+  --btn:#ECE8E0; --btn-hi:#FFFFFF; --btn-press:#D6D1C7; --btn-ink:#0C0C0D; --me:#ECE8E0;
+  --ai:#8C9BFF; --ai-soft:#1E2138; --ai-ink:#070A12; --ai-glow:rgba(140,155,255,.45); --loop-blue:#8C9BFF;
   --human:#FF9152; --human-soft:#3A2416; --human-ink:#070A12;
   --auto:#9E9A93; --auto-soft:#1C1C1F;
   --glow:0 0 0 1px rgba(255,255,255,.06),0 10px 40px rgba(0,0,0,.45);
@@ -234,7 +236,7 @@ a{color:inherit}
 .btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s5)}
 .cta{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;text-decoration:none;border-radius:999px;padding:11px 18px;border:1px solid var(--line-2);color:var(--ink);background:var(--surface)}
 .cta:hover{border-color:var(--brand)}
-.cta.pri{background:var(--brand);border-color:var(--brand);color:var(--brand-ink);box-shadow:var(--btn-glow)}
+.cta.pri{background:var(--btn);border-color:var(--btn);color:var(--btn-ink);box-shadow:var(--btn-glow)}
 .cta svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
 .js .reveal.in{opacity:1;transform:none}
@@ -563,6 +565,36 @@ a.c-card:hover{border-color:var(--brand);box-shadow:var(--glow)}
 .logo-mark{width:46px;height:28px}
 .logo-mark .mark{width:46px;height:28px}
 .logo .logo-word{font-size:19px;font-weight:900;letter-spacing:.24em;line-height:1;margin-right:-.24em;background:linear-gradient(180deg,#FFFFFF 30%,#B9C2FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.cta.pri:hover{background:var(--btn-hi);border-color:var(--btn-hi)}
+.cta.pri:active{background:var(--btn-press);border-color:var(--btn-press);transform:translateY(1px)}
+.skip{background:var(--btn);color:var(--btn-ink)}
+.bub.me,.mf-dori .me{background:var(--me)}
+.g-bar{background:color-mix(in srgb,var(--brand) 70%,var(--surface))}
+.pcard:hover,a.c-card:hover,.cta-band a:hover{box-shadow:0 0 0 1px var(--brand-glow),0 10px 40px rgba(0,0,0,.45)}
+.loop-dot{border-color:var(--loop-blue)}
+.loop-steps b,.loop-steps span:last-child::after{color:var(--loop-blue)}
+.mini .dori{border-color:var(--ai)}
+.d-ai,.track .ev.ai{background:var(--ai)}
+.ev-card.ai{border-left-color:var(--ai)}
+.keys .k-ai b{background:var(--ai-soft);color:var(--ai)}
+.node.ai .ic{background:var(--ai-soft)}
+.node.ai .ic svg{stroke:var(--ai)}
+.bub .who{color:var(--ai)}
+.av.bot{background:var(--ai);border-color:var(--ai);color:var(--ai-ink)}
+.conf{color:var(--ai);background:var(--ai-soft)}
+.ins-i{background:var(--ai-soft)}
+.ins-i b{color:var(--ai)}
+.m-desk rect[fill="var(--brand)"],.m-mobile rect[fill="var(--brand)"]{fill:var(--ai)}
+.m-desk text[fill="var(--brand-ink)"],.m-mobile text[fill="var(--brand-ink)"]{fill:var(--ai-ink)}
+.mf-cs .a{background:var(--ai-soft);border-color:var(--ai)}
+.mf-cs .a i{background:var(--ai)}
+.mf-dori .av{background:var(--ai);color:var(--ai-ink);box-shadow:0 0 10px var(--ai-glow)}
+.mf-dori .dr{background:var(--ai-soft);border-color:var(--ai)}
+.mf-dori .dr i{background:var(--ai)}
+.mf-ads .scan{background:linear-gradient(90deg,transparent,var(--ai-glow),transparent)}
+.mf-ads .c-win{background:var(--brand);box-shadow:0 0 8px var(--brand-glow)}
+.mf-rank .rk-r.hl{background:color-mix(in srgb,var(--brand) 12%,transparent);box-shadow:0 0 0 1px var(--brand-glow)}
 .node:not(:last-child)::after{background:repeating-linear-gradient(180deg,var(--flow) 0 4px,transparent 4px 8px);background-size:2px 8px}
 .track .tick{background:repeating-linear-gradient(90deg,var(--flow) 0 2px,transparent 2px 8px);opacity:1}
 .track .tick-lb{color:var(--ink-2)}
