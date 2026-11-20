@@ -8,7 +8,9 @@
   stage.classList.add('live'); // 대체 SVG 숨김
 
   var TAU = Math.PI * 2;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // 이 루프는 "자동으로 계속 돈다"는 내용 자체라 동작 줄이기에서도 멈추지 않고, 속도와 깜박임만 줄인다.
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SPEED = calm ? 0.5 : 1;
   var labels = [].slice.call(stage.querySelectorAll('.loop-label'));
   var W = 0, H = 0, DPR = 1, small = false;
   var N = 360, P = [], particles = [], pulses = [];
@@ -52,7 +54,7 @@
 
   function frame(now) {
     var a, b; // 세그먼트 양 끝점 (전역으로 새지 않게)
-    var time = reduce ? 4.2 : (now - t0) / 1000;
+    var time = (now - t0) / 1000 * SPEED;
     var dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now;
     var R = Math.min(W * (small ? 0.4 : 0.43), H * 0.9);
     var rotY = Math.sin(time * 0.21) * 0.5;
@@ -108,9 +110,9 @@
     var tmp = {};
     for (i = 0; i < particles.length; i++) {
       var q = particles[i];
-      if (!reduce) q.u = (q.u + q.v * dt) % 1;
+      q.u = (q.u + q.v * dt * SPEED) % 1;
       project(q.u, rotY, rotX, R, tmp);
-      var tw = 0.55 + 0.45 * Math.sin(time * 3 + q.o);
+      var tw = calm ? 0.8 + 0.2 * Math.sin(time * 3 + q.o) : 0.55 + 0.45 * Math.sin(time * 3 + q.o);
       var rad = (2.2 + q.s * 2) * tmp.p;
       var al = (0.25 + 0.5 * (1 - tmp.depth) / 2) * tw;
       var pg = ctx.createRadialGradient(tmp.sx, tmp.sy, 0, tmp.sx, tmp.sy, rad * 3);
@@ -120,12 +122,12 @@
     }
     for (i = 0; i < pulses.length; i++) {
       var pu = pulses[i];
-      if (!reduce) pu.u = (pu.u + pu.v * dt) % 1;
+      pu.u = (pu.u + pu.v * dt * SPEED) % 1;
       for (var tail = 0; tail < 10; tail++) {
         var uu = (pu.u - tail * 0.0045 + 1) % 1;
         project(uu, rotY, rotX, R, tmp);
         var rr = (small ? 10 : 15) * tmp.p * (1 - tail / 12);
-        var ag = 0.55 * (1 - tail / 10);
+        var ag = (calm ? 0.4 : 0.55) * (1 - tail / 10);
         var hg = ctx.createRadialGradient(tmp.sx, tmp.sy, 0, tmp.sx, tmp.sy, rr * 2.2);
         hg.addColorStop(0, 'rgba(255,236,220,' + ag.toFixed(3) + ')');
         hg.addColorStop(0.35, 'rgba(255,150,90,' + (ag * 0.6).toFixed(3) + ')');
@@ -147,7 +149,6 @@
       el.style.opacity = (0.55 + 0.45 * (1 - tmp.depth) / 2).toFixed(2);
       var on = false;
       for (var m = 0; m < pulses.length; m++) { var dd = Math.abs(pulses[m].u - su); if (Math.min(dd, 1 - dd) < 0.045) on = true; }
-      if (reduce) on = i === 3;
       el.classList.toggle('on', on);
       var dot = el._dot || (el._dot = stage.querySelector('.loop-dot[data-i="' + i + '"]'));
       if (dot) { dot.style.transform = 'translate(' + (tmp.sx - 10).toFixed(1) + 'px,' + (tmp.sy - 10).toFixed(1) + 'px)'; dot.classList.toggle('on', on); }
@@ -156,12 +157,11 @@
     if (running) requestAnimationFrame(frame);
   }
 
-  function start() { if (running || reduce) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
+  function start() { if (running) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
   function stop() { running = false; }
 
   resize();
-  window.addEventListener('resize', function () { resize(); if (reduce) frame(performance.now()); });
-  if (reduce) { frame(performance.now()); return; }
+  window.addEventListener('resize', function () { resize(); });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !document.hidden) start(); else stop(); }, { threshold: 0.01 }).observe(stage);
   }

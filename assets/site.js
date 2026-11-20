@@ -17,13 +17,22 @@
 
   /* 프로젝트 카드 작은 그림: 화면에 보일 때만 .play (동작 줄이기면 정지 그림 그대로) */
   var figs = [].slice.call(document.querySelectorAll('.mini-fig'));
-  if (!reduce && figs.length && 'IntersectionObserver' in window) {
+  // 카드 그림은 "자동으로 돈다"는 내용이라 동작 줄이기에서도 재생하되, 재생 속도만 절반으로 늦춘다.
+  var calmDown = function () {
+    if (!reduce || !document.getAnimations) return;
+    document.getAnimations().forEach(function (an) {
+      var el = an.effect && an.effect.target;
+      if (el && el.closest && (el.closest('.mini-fig') || el.closest('.stepper'))) an.playbackRate = 0.5;
+    });
+  };
+  if (figs.length && 'IntersectionObserver' in window) {
     var seen = new Map(), hid = false; // 탭이 숨겨지면(visibilitychange) 정지
     var sync = function () {
       figs.forEach(function (f) {
         var on = !hid && seen.get(f);
         f.classList.toggle('play', !!on);
       });
+      requestAnimationFrame(calmDown);
     };
     var fio = new IntersectionObserver(function (es) {
       es.forEach(function (e) { seen.set(e.target, e.isIntersecting); });
@@ -62,10 +71,11 @@
           mark(rows[up], 'up', '▲1'); mark(rows[dn], 'dn', '▼1');
         }
       }
-      setTimeout(function () { tick(); setInterval(tick, 2900); }, 700 + bi * 400);
+      setTimeout(function () { tick(); setInterval(tick, reduce ? 5800 : 2900); }, 700 + bi * 400);
     });
   }
 
+  requestAnimationFrame(calmDown); // 상세 페이지 스테퍼 점선도 같은 규칙
   var items = [].slice.call(document.querySelectorAll('.reveal'));
   if (reduce || !('IntersectionObserver' in window)) {
     items.forEach(function (el) { el.classList.add('in'); });
