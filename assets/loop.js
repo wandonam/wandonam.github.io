@@ -17,7 +17,7 @@
   var running = false, visible = true, t0 = performance.now(), last = 0;
 
   // 단계 라벨이 놓일 루프 위치 (0..1)
-  var stageT = [0.87, 0.0, 0.13, 0.37, 0.5, 0.63].slice(0, labels.length); // 모으기→정리→AI→사람→실행→점검, 교차점(0.25·0.75)은 피함
+  var stageT = [0.87, 0.0, 0.13, 0.37, 0.5, 0.63].slice(0, labels.length); // 수집→정리→AI 분석→의사 결정→액션→리뷰, 교차점(0.25·0.75)은 피함
 
   function resize() {
     var r = stage.getBoundingClientRect();
